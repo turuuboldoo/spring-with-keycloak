@@ -1,0 +1,42 @@
+server:
+  port: 8083
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/oauth?
+      createDatabaseIfNotExist=true&
+      autoReconnect=true&
+      useSSL=false&
+      allowPublicKeyRetrieval=true
+    username: root
+    password: secret
+    driverClassName: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      dialect: org.hibernate.dialect.MySQL8Dialect
+    generate-ddl: true
+    show-sql: true
+
+  security:
+    oauth2:
+      client:
+        registration:
+          oauth2-client-credentials:
+            client-id: oauth2-client-cridentials
+            client-secret: D372HADgxgQOsGTcDvHlhmqtaQ6LN20v
+            scope:
+              - openid
+              - profile
+              - roles
+            authorization-grant-type: client_credentials
+            provider: keycloak
+            redirect-uri: http://localhost:8080/login/oauth2/code/oauth2-demo
+        provider:
+          oauth2-client-credentials:
+            issuer-uri: http://localhost:3308/realms/oauth2-demo
+#      resourceserver:
+#        jwt:
+#          issuer-uri: http://localhost:3308/realms/oauth2-demo

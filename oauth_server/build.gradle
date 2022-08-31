@@ -1,0 +1,55 @@
+import org.gradle.kotlin.dsl.support.KotlinCompilerKt
+
+plugins {
+    id "org.springframework.boot" version "2.7.3"
+    id "io.spring.dependency-management" version "1.0.13.RELEASE"
+
+    id 'org.jetbrains.kotlin.jvm' version '1.7.10'
+    id "org.jetbrains.kotlin.plugin.noarg" version "1.7.10"
+    id 'org.jetbrains.kotlin.plugin.spring' version '1.7.10'
+}
+
+group = "com.turbo"
+version = "0.0.1"
+java.sourceCompatibility = JavaVersion.VERSION_18
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // kotlin dependencies
+    implementation "org.jetbrains.kotlin:kotlin-reflect"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+
+    // spring boot dependencies
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+    implementation "org.springframework.boot:spring-boot-starter-security"
+    implementation "org.springframework.boot:spring-boot-starter-oauth2-client"
+
+    // spring security dependencies
+    implementation "org.springframework.security:spring-security-oauth2-jose"
+    implementation "org.springframework.security:spring-security-oauth2-resource-server"
+
+    // mysql connector
+    runtimeOnly("mysql:mysql-connector-java")
+
+    // development tools
+    implementation "org.springframework.boot:spring-boot-devtools"
+    implementation "com.fasterxml.jackson.module:jackson-module-kotlin"
+
+    // testing
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+}
+
+tasks.withType(KotlinCompilerKt) {
+    kotlinOptions {
+        jvmTarget = "18"
+        freeCompilerArgs = asList("-Xjsr305=strict")
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
